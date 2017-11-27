@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		a{
+			text-decoration: none;
+		}
+		.ui-datepicker-wrapper{
+			width: 230px;
+			height: 262px;
+			border: 1px solid #ccc;
+			box-shadow: 5px 5px 5px rgba(0,0,0,0.15);
+			display: none;
+			position: absolute;
+		}
+		.ui-datepicker-wrapper-show{
+			display: block;
+		}
+		.ui-datepicker-wrapper .ui-datepicker-header{
+			height: 40px;
+			background: rgb(242,240,242);
+			line-height: 40px;
+			padding:0 20px;
+			border-bottom: 2px solid #ddd;
+		}
+		.ui-datepicker-header .ui-datepicker-btn{
+			color:#1abc9c;
+			font-weight: 900;
+		    width: 20px;
+		    height: 20px;
+		}
+		.ui-datepicker-header .prev{
+			float: left;
+		}
+		.ui-datepicker-header .next{
+			float: right;
+			text-align: right;
+		}
+		.ui-datepicker-header .ui-datepicker-curr-month{
+			color:rgb(142,141,142);
+			margin-left: 25px;
+		}
+		.ui-datepicker-wrapper .ui-datepicker-body table{
+			text-align: center;
+			color:rgb(142,141,142);
+		}
+		.ui-datepicker-wrapper .ui-datepicker-body thead th{
+			font-weight: 900;
+		}
+		.ui-datepicker-wrapper .ui-datepicker-body tbody td{
+			width: 30px;
+			text-align: center;
+			line-height: 30px;
+			border:1px solid #eee;
+			border-bottom:0;
+			border-right:0;
+			cursor: pointer;
+		}
+		
+		.datepicker{
+			border:1px solid #ccc;
+			border-radius: 4px;
+			padding: 5px;
+			height:24px;
+			line-height: 24px;
+			width: 220px;
+		}
+		.datepicker:focus{
+			outline:0 none;
+			border:1px solid #1abc9c;
+		}
+	</style>
+</head>
+<body>
+	<input type="text" class="datepicker">
+	 <div class="ui-datepicker-wrapper">
+				<!--	<div class="ui-datepicker-header">
+			<a href="javascript:;" class="ui-datepicker-btn prev">&lt;</a>
+			<a href="javascript:;" class="ui-datepicker-btn next">&gt;</a>
+			<span class="ui-datepicker-curr-month">2016-12</span>
+		</div>
+		<div class="ui-datepicker-body">
+			<table>
+				<thead>
+					<tr>
+						<th>日</th>
+						<th>一</th>
+						<th>二</th>
+						<th>三</th>
+						<th>四</th>
+						<th>五</th>
+						<th>六</th>
+					</tr>
+				</thead>
+			
+				<tbody>
+					<tr>
+						<td>24</td>
+						<td>25</td>
+						<td>26</td>
+						<td>27</td>
+						<td>28</td>
+						<td>29</td>
+						<td>30</td>
+					</tr>
+			
+					<tr>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+						<td>5</td>
+						<td>6</td>
+						<td>7</td>
+					</tr>
+					
+					<tr>
+						<td>8</td>
+						<td>9</td>
+						<td>10</td>
+						<td>11</td>
+						<td>12</td>
+						<td>13</td>
+						<td>14</td>
+					</tr>
+					<tr>
+						<td>15</td>
+						<td>16</td>
+						<td>17</td>
+						<td>18</td>
+						<td>19</td>
+						<td>20</td>
+						<td>21</td>
+					</tr>
+					<tr>
+						<td>22</td>
+						<td>23</td>
+						<td>24</td>
+						<td>25</td>
+						<td>26</td>
+						<td>27</td>
+						<td>28</td>
+					</tr>
+					<tr>
+						<td>29</td>
+						<td>30</td>
+						<td>31</td>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>-->
+	</div> 
+
+	<script src="jquery.js"></script>
+	<script src="mydata.js"></script>
+	<script src="handlebars-v4.0.10.js"></script>
+	<script id="date-body-template" type="text/x-handlebars-template">
+		<table>
+				<thead>
+					<tr>
+						<th>日</th>
+						<th>一</th>
+						<th>二</th>
+						<th>三</th>
+						<th>四</th>
+						<th>五</th>
+						<th>六</th>
+					</tr>
+				</thead>
+
+				<tbody>
+				{{#each this.table}}
+					<tr>
+						{{#each this}}			
+						<td data-ori={{ori-0}}>{{show-0}}</td>
+						<td data-ori={{ori-1}}>{{show-1}}</td>
+						<td data-ori={{ori-2}}>{{show-2}}</td>
+						<td data-ori={{ori-3}}>{{show-3}}</td>
+						<td data-ori={{ori-4}}>{{show-4}}</td>
+						<td data-ori={{ori-5}}>{{show-5}}</td>
+						<td data-ori={{ori-6}}>{{show-6}}</td>
+						{{/each}}
+					</tr>
+				{{/each}}
+				</tbody>
+		</table>
+	</script>
+
+	<script id="date-header-template" type="text/x-handlebars-template">
+		<a href="javascript:;" class="ui-datepicker-btn prev">&lt;</a>
+		<a href="javascript:;" class="ui-datepicker-btn next">&gt;</a>
+		<span class="ui-datepicker-curr-month">{{year}}-{{month}}</span>
+	</script>
+
+	<script id="date-wrapper-template" type="text/x-handlebars-template">
+			<div class="ui-datepicker-header"></div>
+			<div class="ui-datepicker-body"></div>
+	</script>
+	
+	<script>
+		$(function(){
+			//var isOpen = false;
+			var $wrapper = $(".ui-datepicker-wrapper"),
+				$input = $(".datepicker");
+			var year,month;
+			var now = new Date();
+			year = now.getFullYear();
+			month = now.getMonth() + 1;
+			var $prev,$next;
+			function renderPage(){
+				var monthData = datepicker.getMonthData(year,month);
+					year = monthData.year;
+					month = monthData.month;
+				renderTemplate("#date-wrapper-template",monthData,".ui-datepicker-wrapper");
+				renderTemplate("#date-header-template",monthData,".ui-datepicker-header");
+				renderTemplate("#date-body-template",monthData,".ui-datepicker-body");
+			}
+		
+			$(".datepicker").click(function(){
+				renderPage();
+				//if(!isOpen){
+					$wrapper.addClass("ui-datepicker-wrapper-show");
+					var left = $input[0].offsetLeft;
+					var	top = $input[0].offsetTop;
+					var	height = $input[0].offsetHeight;
+					$wrapper[0].style.left = left + "px";
+					$wrapper[0].style.top = top + height + 2 + "px";
+					isOpen = true;
+					$prev = $(".prev");
+					$next = $(".next");
+					console.log($prev);
+					console.log($next);
+					/*$wrapper.delegate($prev,"click",function(e){
+						console.log(e.target);
+						month--;
+						if(month===0){
+                			month=12;
+                			year--;
+            			}
+						renderPage();
+					}).delegate($next,"click",function(e1){
+						console.log(e1.target);
+						month++;
+						renderPage();
+					});*/
+					$wrapper.on("click",".prev",function(e){
+						console.log("--->prev"+e.target);
+						console.log("1:"+month);
+						month--;
+						if(month===0){
+                			month=12;
+                			year--;
+            			}
+						console.log("1:"+month);
+						renderPage();
+						console.log("--------------");
+					}).on("click",".next",function(e1){
+						console.log("--->next"+e1.target);
+						console.log("2:"+month);
+						month++;
+						console.log("2:"+month);
+						renderPage();
+					});
+					/*$wrapper[0].addEventListener("click", function(e){
+						var $target = e.target;
+						if(!$target.classList.contains("ui-datepicker-btn")){
+							return;
+						}else{
+							if($target.classList.contains("prev")){
+								month--;
+								if(month===0){
+		                			month=12;
+		                			year--;
+		            			}
+								console.log("after:"+month);
+								renderPage();
+							}else if($target.classList.contains("next")){
+								console.log("before:"+month);
+								month++;
+								console.log("after:"+month);
+								renderPage();
+							}
+						}
+					});*/
+					$wrapper[0].addEventListener("click", function(e){
+						var target = e.target;
+						var targetName = (target.tagName).toLowerCase();
+						//console.log($(target).data("ori"));
+						var ori = $(target).data("ori");
+						if("td" === targetName){
+							var date = new Date(year,month-1,ori);
+							
+							$input.val(format(date));
+							
+						}else{
+							return ;
+						}
+						
+						$wrapper.removeClass("ui-datepicker-wrapper-show");
+					});
+				//}else{
+					//isOpen = false;
+				//}
+			});
+	
+		
+		});
+	
+		function format(date){
+			var year = date.getFullYear();
+			var month = date.getMonth()+1;
+			var date = date.getDate();
+			
+			month = month<10?("0"+month):month;
+			date = date<10?("0"+date):date;
+			var html = year + "-" + month + "-" + date;
+			return html;
+		}
+		
+		function renderTemplate(templateSelector,data,htmlSelector){
+			var t = $(templateSelector).html();
+			var f = Handlebars.compile(t);  //f是一个函数，为编译过的模板
+			var h = f(data);  
+			$(htmlSelector).html(h);
+		}
+	</script>
+</body>
+</html>
